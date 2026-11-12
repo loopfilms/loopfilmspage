@@ -177,6 +177,8 @@
     background:linear-gradient(0deg,rgba(0,0,0,.88),rgba(0,0,0,0));
     font-weight:900;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;color:#fff;line-height:1.2;
   }
+  .chica__ver{display:inline-block;margin-top:.45rem;font-size:.68rem;font-weight:900;letter-spacing:.1em;color:#fff;opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s}
+  .chica button:hover .chica__ver,.chica button:focus-visible .chica__ver{opacity:1;transform:none}
   .chica__nombre span{display:block;font-weight:400;letter-spacing:.02em;text-transform:none;font-size:.78rem;color:rgba(255,255,255,.75);margin-top:.15rem}
 
   /* ---------- Paneles de contenido ---------- */
@@ -239,12 +241,16 @@
     box-shadow:0 40px 100px rgba(0,0,0,.7);
   }
   dialog::backdrop{background:rgba(5,5,8,.75);backdrop-filter:blur(6px)}
-  .modal{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
-  .modal img{width:100%;height:100%;max-height:520px;object-fit:cover}
-  .modal__texto{padding:2.4rem 2.2rem;display:flex;flex-direction:column;justify-content:flex-end}
-  .modal__texto .titulo{font-size:1.9rem}
-  .modal__texto p{margin-top:.4rem;color:var(--destacado);font-weight:700}
-  .modal__texto small{margin-top:1.2rem;color:var(--suave);font-size:.92rem;line-height:1.5}
+  dialog{width:min(980px,calc(100% - 2rem))}
+  .modal{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);max-height:min(640px,calc(100vh - 3rem))}
+  .modal img{width:100%;height:100%;object-fit:cover}
+  .modal__texto{padding:2.6rem 2.4rem 2.2rem;display:flex;flex-direction:column;overflow-y:auto}
+  .modal__texto .titulo{font-size:1.9rem;margin-top:.3rem;padding-right:2.5rem}
+  #ficha-rol{margin-top:.5rem;color:var(--destacado);font-weight:700}
+  .modal__lugar{margin-top:.2rem;color:var(--suave);font-size:.92rem}
+  .modal__bio{margin-top:1.4rem;padding-top:1.3rem;border-top:1px solid var(--linea);font-size:.97rem;line-height:1.65;color:var(--texto)}
+  .modal__bio p + p{margin-top:.8rem}
+  .modal__bio em{color:#fff}
   .cerrar{position:absolute;top:1rem;right:1rem;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center;color:#fff}
   .cerrar svg{width:18px;height:18px}
 
@@ -281,9 +287,10 @@
     .formatos{grid-template-columns:1fr}
     .creditos{grid-template-columns:1fr;gap:0}
     .creditos dd{margin-bottom:.6rem}
-    .modal{grid-template-columns:1fr}
-    .modal img{max-height:52vh}
-    .modal__texto{padding:1.6rem}
+    .modal{grid-template-columns:1fr;max-height:none}
+    dialog{max-height:calc(100vh - 2rem);overflow-y:auto}
+    .modal img{height:42vh}
+    .modal__texto{padding:1.6rem;overflow:visible}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -381,29 +388,29 @@
         </div>
       </div>
       <ul class="tira">
-        <li class="chica"><button data-nombre="Martina Mercado" data-rol="Dirección, guion y montaje" data-foto="img/martina-mercado.jpg">
+        <li class="chica"><button data-nombre="Martina Mercado" data-rol="Dirección, guion y montaje" data-foto="img/martina-mercado.jpg" data-bio="martina">
           <img src="img/martina-mercado.jpg" alt="">
-          <span class="chica__nombre">Martina Mercado<span>Dirección, guion y montaje</span></span>
+          <span class="chica__nombre">Martina Mercado<span>Dirección, guion y montaje</span><b class="chica__ver">VER BIO +</b></span>
         </button></li>
-        <li class="chica"><button data-nombre="Ludmila Castillo" data-rol="Producción" data-foto="img/ludmila-castillo.jpg">
+        <li class="chica"><button data-nombre="Ludmila Castillo" data-rol="Producción" data-foto="img/ludmila-castillo.jpg" data-bio="ludmila">
           <img src="img/ludmila-castillo.jpg" alt="">
-          <span class="chica__nombre">Ludmila Castillo<span>Producción</span></span>
+          <span class="chica__nombre">Ludmila Castillo<span>Producción</span><b class="chica__ver">VER BIO +</b></span>
         </button></li>
-        <li class="chica"><button data-nombre="Jaida Aldado" data-rol="Dirección de fotografía" data-foto="img/jaida-aldado.jpg">
+        <li class="chica"><button data-nombre="Jaida Aldado" data-rol="Dirección de fotografía" data-foto="img/jaida-aldado.jpg" data-bio="jaida">
           <img src="img/jaida-aldado.jpg" alt="" style="object-position:50% 30%">
-          <span class="chica__nombre">Jaida Aldado<span>Dirección de fotografía</span></span>
+          <span class="chica__nombre">Jaida Aldado<span>Dirección de fotografía</span><b class="chica__ver">VER BIO +</b></span>
         </button></li>
-        <li class="chica"><button data-nombre="Paulina Bearzzotti" data-rol="Dirección de sonido" data-foto="img/paulina-bearzzotti.jpg">
+        <li class="chica"><button data-nombre="Paulina Bearzzotti" data-rol="Dirección de sonido" data-foto="img/paulina-bearzzotti.jpg" data-bio="paulina">
           <img src="img/paulina-bearzzotti.jpg" alt="">
-          <span class="chica__nombre">Paulina Bearzzotti<span>Dirección de sonido</span></span>
+          <span class="chica__nombre">Paulina Bearzzotti<span>Dirección de sonido</span><b class="chica__ver">VER BIO +</b></span>
         </button></li>
-        <li class="chica"><button data-nombre="Guillermina Veron" data-rol="Dirección de arte" data-foto="img/guillermina-veron.jpg">
+        <li class="chica"><button data-nombre="Guillermina Veron" data-rol="Dirección de arte" data-foto="img/guillermina-veron.jpg" data-bio="guillermina">
           <img src="img/guillermina-veron.jpg" alt="">
-          <span class="chica__nombre">Guillermina Veron<span>Dirección de arte</span></span>
+          <span class="chica__nombre">Guillermina Veron<span>Dirección de arte</span><b class="chica__ver">VER BIO +</b></span>
         </button></li>
-        <li class="chica"><button data-nombre="Sabina Villordo" data-rol="Asistencia de producción y dirección" data-foto="img/sabina-villordo.jpg">
+        <li class="chica"><button data-nombre="Sabina Villordo" data-rol="Asistencia de producción y dirección" data-foto="img/sabina-villordo.jpg" data-bio="sabina">
           <img src="img/sabina-villordo.jpg" alt="">
-          <span class="chica__nombre">Sabina Villordo<span>Asist. de producción y dirección</span></span>
+          <span class="chica__nombre">Sabina Villordo<span>Asist. de producción y dirección</span><b class="chica__ver">VER BIO +</b></span>
         </button></li>
       </ul>
     </div>
@@ -523,11 +530,20 @@
       <span class="etiqueta" style="color:var(--suave)">LoopFilms</span>
       <h3 class="titulo" id="ficha-nombre"></h3>
       <p id="ficha-rol"></p>
-      <small>Integrante del equipo de <em>He visto a Luci</em>, el primer cortometraje de LoopFilms.</small>
+      <span class="modal__lugar" id="ficha-lugar"></span>
+      <div class="modal__bio" id="ficha-bio"></div>
     </div>
   </div>
   <button class="cerrar" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
 </dialog>
+
+<!-- Biografías del equipo -->
+<template id="bio-martina" data-completo="Martina Mercado" data-lugar="Corrientes, Argentina"><p>Se encuentra en formación en la Tecnicatura en Diseño de Imagen, Sonido y Multimedia en la UNNE. En el marco de su formación, participó en diversos proyectos académicos desempeñándose en los roles de Dirección de Arte, Dirección de Fotografía e Iluminación. Estas experiencias le permitieron desarrollar herramientas en planificación y manejo de tiempos dentro del set, fortaleciendo su capacidad para organizar procesos de trabajo y acompañar dinámicas de producción.</p><p>Su enfoque se centra en sostener estructuras claras que articulen lo creativo con lo técnico, acompañando los procesos desde una lógica de orden que permita la transformación dentro de la puesta.</p><p>Actualmente continúa su formación desempeñándose como Asistente de Dirección en el cortometraje <em>He visto a Luci</em>, producido por Loop Films.</p></template>
+<template id="bio-ludmila" data-completo="Ludmila Castillo" data-lugar="Corrientes, Argentina"><p>Realizadora audiovisual en formación, especializándose en el área de Producción general y ejecutiva. Su enfoque profesional se destaca por la optimización de recursos a través de la gestión de alianzas estratégicas y scouting de locaciones, logrando un equilibrio entre la propuesta estética del proyecto <em>He visto a Luci</em> y las posibilidades presupuestarias.</p><p>En el ámbito de la ficción, lideró la producción de diversos proyectos. Su perfil resolutivo se enriquece con experiencia en gestión cultural en el Museo de Arte Contemporáneo de Corrientes (MACC), comunicación digital y oratoria, habilidades clave para la negociación y el liderazgo de equipos de trabajo.</p></template>
+<template id="bio-jaida" data-completo="Jaida Isis Aldado" data-lugar="Resistencia, Chaco, Argentina"><p>Es una realizadora audiovisual en formación. Su perfil se centra en la construcción de atmósferas visuales y relatos vinculados a la juventud, el arte y la cultura. Se desempeñó como Ayudante de Cámara en el documental <em>Vivir Bailando</em> y como Asistente de Dirección en el videoclip <em>Soñé que venías</em>. También participó en producciones audiovisuales realizadas en el Fogón de los Arrieros, explorando identidad y expresiones culturales del nordeste argentino.</p><p>Complementó su formación con estudios en artes plásticas en una academia local. Sus proyectos combinan una propuesta visual marcada con narrativas humanas. Actualmente se desempeña como Directora de Fotografía en el cortometraje dramático <em>He visto a Luci</em>, producido por Loop Films.</p></template>
+<template id="bio-paulina" data-completo="Paulina Bearzzotti" data-lugar="Corrientes, Argentina"><p>Es una realizadora audiovisual en formación, con especial interés en el área sonora y una sólida base técnica en diseño y registro de sonido.</p><p>Se desempeñó como sonidista en el cortometraje de suspenso <em>El ruido de abajo</em>, participando en la captura, supervisión y cuidado de los detalles sonoros, y en el sector de iluminación en <em>Soñé que venías</em>, contribuyendo a la construcción de la atmósfera narrativa del proyecto.</p><p>Además, cuenta con experiencia en las áreas de cámara e iluminación, habiendo trabajado como camarógrafa y asistente de iluminación en videoclips y producciones documentales. Su perfil se caracteriza por la versatilidad, el compromiso con el trabajo en equipo y una mirada sensible hacia la construcción estética y narrativa audiovisual.</p></template>
+<template id="bio-guillermina" data-completo="Gloria Guillermina Veron" data-lugar="Corrientes, Argentina"><p>Nació en Corrientes en el año 2003. Su formación se caracteriza por su transdisciplinariedad y las artes.</p><p>Actualmente cursa de manera simultánea la Tecnicatura en Diseño de Imagen, Sonido y Multimedia (FADyCC - UNNE), la Tecnicatura Superior en Canto (Instituto Superior de Música “Carmelo H. De Biasi”) y la Tecnicatura en Gestión de la Industria Musical en la Universidad Tres de Febrero. Desde temprana edad ha desarrollado habilidades en guitarra, piano y danza, alcanzando el título de Profesorado de Expresión Corporal a los 18 años.</p><p>Además de su perfil artístico, mantiene una participación activa en el ámbito deportivo como integrante del equipo de remo del Club Regatas Corrientes. Esta combinación de disciplinas define su perfil como una realizadora integral en constante búsqueda de nuevos lenguajes expresivos.</p></template>
+<template id="bio-sabina" data-completo="Sabina Ailen Villordo" data-lugar="Corrientes, Argentina"><p>Durante su formación académica tuvo la oportunidad de participar en diferentes producciones audiovisuales, desempeñando diversos roles que le permitieron adquirir experiencia y fortalecer sus conocimientos en el área.</p><p>En el cortometraje de ficción <em>La Última Porción</em> se desempeñó como Productora, mientras que en el documental <em>Catalino Cuenca</em> asumió el rol de Directora. También participó como Asistente de Dirección en el videoclip <em>No Tenemos Reloj</em>. Estas experiencias le permitieron desarrollar habilidades de organización, coordinación y trabajo en equipo, fundamentales para el ámbito audiovisual.</p><p>Actualmente participa como Asistente de Producción en el cortometraje dramático <em>He visto a Luci</em>, una producción realizada por Loop Films, continuando su crecimiento y formación profesional dentro de la industria audiovisual.</p></template>
 
 <script>
   // Barra: se vuelve sólida al bajar
@@ -566,7 +582,13 @@
     document.getElementById('ficha-foto').alt = 'Foto de ' + b.dataset.nombre;
     document.getElementById('ficha-nombre').textContent = b.dataset.nombre;
     document.getElementById('ficha-rol').textContent = b.dataset.rol;
+    const bio = document.getElementById('bio-' + b.dataset.bio);
+    document.getElementById('ficha-nombre').textContent = bio ? bio.dataset.completo : b.dataset.nombre;
+    document.getElementById('ficha-lugar').textContent = bio ? bio.dataset.lugar : '';
+    const caja = document.getElementById('ficha-bio');
+    caja.replaceChildren(); if (bio) caja.append(bio.content.cloneNode(true));
     dialogo.showModal();
+    dialogo.querySelector('.modal__texto').scrollTop = 0;
   }));
   dialogo.querySelector('.cerrar').addEventListener('click', () => dialogo.close());
   dialogo.addEventListener('click', e => { if (e.target === dialogo) dialogo.close(); });
