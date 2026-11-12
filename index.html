@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LoopFilms · Productora audiovisual</title>
 <meta name="description" content="LoopFilms es una productora audiovisual universitaria de Corrientes Capital. Hacemos cortometrajes, teasers y tráilers. Nuestro primer corto: He visto a Luci.">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#0b0b10">
 <meta property="og:title" content="LoopFilms · Productora audiovisual">
 <meta property="og:description" content="Cine independiente hecho por seis estudiantes de la FADyCC-UNNE, en Corrientes Capital.">
 <meta property="og:type" content="website">
@@ -13,389 +13,395 @@
 <link rel="icon" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Josefin+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --negro:#000;
-    --superficie:#12040a;   /* filas y tarjetas */
-    --vino:#5e0c28;         /* bordó del logo */
-    --magenta:#9b1c52;      /* brillo */
-    --crema:#f3e4c3;        /* texto y logo */
-    --gris:rgba(243,228,195,.62);
-    --linea:rgba(243,228,195,.14);
-    --titulo:"Cinzel", "Trajan Pro", Georgia, serif;
-    --texto:"Josefin Sans", "Futura", "Century Gothic", sans-serif;
-    --margen:clamp(1.25rem,4vw,4rem);
+    --fondo:#0b0b10;
+    --panel:rgba(14,14,20,.78);
+    --tarjeta:#16161f;
+    --blanco:#ffffff;
+    --texto:rgba(255,255,255,.86);
+    --suave:rgba(255,255,255,.6);
+    --linea:rgba(255,255,255,.12);
+    --acento:#b8146a;        /* magenta LoopFilms */
+    --acento-hover:#d01b79;
+    --destacado:#ff4fa3;     /* como el "98% Match" de la referencia */
+    --radio:22px;
+    --fuente:"Lato", "Helvetica Neue", Arial, sans-serif;
+    --ancho:1240px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{background:var(--negro);color:var(--crema);font-family:var(--texto);font-weight:300;font-size:1.1rem;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{
+    font-family:var(--fuente);font-size:1.05rem;line-height:1.6;color:var(--texto);
+    background:var(--fondo);-webkit-font-smoothing:antialiased;min-height:100vh;
+  }
+  /* Fondo de toda la página: la misma foto, desenfocada y oscura (como en la referencia) */
+  .fondo{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  .fondo img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);filter:blur(28px) brightness(.45) saturate(1.1)}
+  .fondo::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(11,11,16,.15),rgba(11,11,16,.85) 75%)}
+
   img,video{display:block;max-width:100%}
-  a{color:inherit}
-  button{font:inherit;color:inherit}
-  :focus-visible{outline:2px solid var(--crema);outline-offset:4px;border-radius:4px}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:2px solid var(--blanco);outline-offset:3px;border-radius:6px}
   .oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .saltar{position:absolute;left:-9999px;z-index:200;background:var(--crema);color:#000;padding:.6rem 1rem}
+  .saltar{position:absolute;left:-9999px;z-index:200;background:#fff;color:#000;padding:.6rem 1rem;border-radius:6px}
   .saltar:focus{left:1rem;top:1rem}
-  section{scroll-margin-top:70px}
 
-  /* ---------- Barra superior ---------- */
-  .barra{
-    position:fixed;inset:0 0 auto 0;z-index:100;height:70px;
-    display:flex;align-items:center;justify-content:space-between;gap:2rem;
-    padding:0 var(--margen);
-    background:linear-gradient(180deg,rgba(0,0,0,.8),rgba(0,0,0,0));
-    transition:background .35s;
+  .pagina{width:min(var(--ancho),100% - 3rem);margin:0 auto;padding:2rem 0 3rem;display:flex;flex-direction:column;gap:2rem}
+  .panel{
+    position:relative;border-radius:var(--radio);overflow:hidden;
+    background:var(--panel);border:1px solid var(--linea);
+    box-shadow:0 40px 90px rgba(0,0,0,.55);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   }
-  .barra.solida{background:rgba(0,0,0,.94)}
-  .barra__logo img{height:54px;width:auto}
-  .barra nav{display:flex;align-items:center;gap:2.2rem}
-  .barra ul{display:flex;gap:1.8rem;list-style:none}
-  .barra ul a{text-decoration:none;font-size:.98rem;font-weight:400;color:var(--gris);transition:color .2s}
-  .barra ul a:hover,.barra ul a[aria-current="true"]{color:var(--crema)}
-  .abrir-menu{display:none;background:none;border:1px solid var(--linea);padding:.4rem .9rem .3rem;border-radius:4px;cursor:pointer}
+  section{scroll-margin-top:1.5rem}
 
+  /* Títulos: mayúscula, Lato Black, como "MY LIST" */
+  .etiqueta{font-weight:900;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;color:var(--blanco)}
+  .titulo{font-weight:900;text-transform:uppercase;color:var(--blanco);line-height:1.02;letter-spacing:-.005em}
+
+  /* ---------- Botones ---------- */
   .boton{
-    display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;cursor:pointer;
-    font-family:var(--texto);font-weight:600;font-size:1.05rem;line-height:1;
-    padding:.95rem 1.6rem .85rem;border-radius:6px;border:0;
-    background:var(--crema);color:#000;transition:background .2s, transform .2s;
+    display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+    height:46px;padding:0 1.9rem;border-radius:999px;
+    background:var(--acento);color:#fff;font-weight:900;font-size:.88rem;letter-spacing:.08em;text-transform:uppercase;
+    transition:background .2s, transform .2s;
   }
-  .boton:hover{background:#fff}
-  .boton svg{width:20px;height:20px;flex:none}
-  .boton--gris{background:rgba(110,110,110,.55);color:var(--crema)}
-  .boton--gris:hover{background:rgba(110,110,110,.4)}
-  .boton--chico{padding:.6rem 1.05rem .5rem;font-size:.95rem}
+  .boton:hover{background:var(--acento-hover)}
+  .boton:active{transform:scale(.97)}
+  .boton svg{width:16px;height:16px}
+  .boton-redondo{
+    width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+    border:2px solid rgba(255,255,255,.85);color:#fff;transition:background .2s;
+  }
+  .boton-redondo:hover{background:rgba(255,255,255,.14)}
+  .boton-redondo svg{width:20px;height:20px}
 
-  /* ---------- Portada (estreno destacado) ---------- */
-  .portada{position:relative;min-height:max(640px,100svh);display:flex;align-items:center;overflow:hidden}
-  .portada__fondo{position:absolute;inset:0}
-  .portada__fondo img{width:80%;height:100%;margin-left:auto;object-fit:cover;object-position:50% 35%;transform:scale(1.06);animation:acercar 18s ease-out forwards}
-  @keyframes acercar{to{transform:scale(1)}}
-  .portada__fondo::after{
+  /* ---------- Portada (la pantalla de la referencia) ---------- */
+  .portada{min-height:min(880px,calc(100vh - 4rem));display:flex;flex-direction:column}
+  .portada__foto{position:absolute;inset:0;z-index:0}
+  .portada__foto img{width:100%;height:100%;object-fit:cover;object-position:62% 30%}
+  .portada__foto::after{
     content:"";position:absolute;inset:0;
     background:
-      linear-gradient(90deg,#000 0%,#000 22%,rgba(0,0,0,.75) 38%,rgba(0,0,0,.1) 62%,rgba(0,0,0,.35) 100%),
-      linear-gradient(0deg,#000 0%,rgba(0,0,0,0) 32%);
+      linear-gradient(90deg,rgba(10,10,15,.88) 0%,rgba(10,10,15,.6) 30%,rgba(10,10,15,.05) 60%,rgba(10,10,15,.25) 100%),
+      linear-gradient(0deg,rgba(10,10,15,.96) 0%,rgba(10,10,15,.75) 24%,rgba(10,10,15,0) 52%),
+      linear-gradient(180deg,rgba(10,10,15,.6) 0%,rgba(10,10,15,0) 18%);
   }
-  .portada__contenido{position:relative;z-index:2;padding:120px var(--margen) 140px;max-width:760px}
-  .portada__firma{display:flex;align-items:center;gap:.7rem;font-size:1rem;color:var(--gris)}
-  .portada__firma img{height:34px;width:auto}
-  .portada__titulo{margin:1.2rem 0 .6rem -4%;width:min(680px,108%);aspect-ratio:16/5.4;overflow:hidden;position:relative}
-  .portada__titulo video{position:absolute;left:0;top:-24%;width:100%;mix-blend-mode:screen;filter:brightness(1.7) saturate(1.2)}
-  .datos-titulo{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.1rem;margin-top:.4rem;font-size:1rem}
-  .datos-titulo .estado{
-    display:inline-flex;align-items:center;gap:.5rem;
-    border:1px solid rgba(243,228,195,.5);border-radius:4px;padding:.25rem .65rem .15rem;
-  }
-  .estado::before{content:"";width:7px;height:7px;border-radius:50%;background:#ff5a4f;box-shadow:0 0 8px #ff5a4f}
-  .datos-titulo span:not(.estado){color:var(--gris)}
-  .portada__sinopsis{margin-top:1.3rem;font-size:1.2rem;line-height:1.55;max-width:52ch;text-shadow:0 2px 12px rgba(0,0,0,.6)}
-  .portada__acciones{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+  .portada > *:not(.portada__foto){position:relative;z-index:1}
 
-  /* ---------- Filas ---------- */
-  .fila{padding:4.5rem 0 1rem;position:relative;z-index:3}
-  .fila__cabeza{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding:0 var(--margen);margin-bottom:1.4rem}
-  .fila h2{font-family:var(--titulo);font-weight:700;font-size:clamp(1.5rem,2.6vw,2.1rem);letter-spacing:.02em;line-height:1.15}
-  .fila__nota{color:var(--gris);font-size:1rem;margin-top:.35rem}
+  .barra{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1.6rem 2.6rem}
+  .barra__izq{display:flex;align-items:center;gap:2.2rem}
+  .barra__logo img{height:40px;width:auto}
+  .barra ul{display:flex;gap:1.9rem;list-style:none}
+  .barra ul a{font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.82);transition:color .2s}
+  .barra ul a:hover{color:#fff}
+  .barra__der{display:flex;align-items:center;gap:1.1rem}
+  .barra__icono{width:22px;height:22px;color:#fff;opacity:.9}
+  .barra__avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.9);background:#2a0716;display:grid;place-items:center}
+  .barra__avatar img{width:86%;height:auto}
+  .abrir-menu{display:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--linea);place-items:center}
+  .abrir-menu svg{width:20px;height:20px}
 
-  /* Quiénes somos */
-  .nosotras{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(2rem,5vw,5rem);align-items:center;padding:0 var(--margen)}
-  .nosotras p{max-width:62ch}
-  .nosotras p + p{margin-top:1rem}
-  .cifras{display:grid;grid-template-columns:repeat(3,1fr);margin-top:2.4rem;border-top:1px solid var(--linea)}
-  .cifras div{padding:1.3rem 1rem 0 0}
-  .cifras strong{display:block;font-family:var(--titulo);font-weight:700;font-size:1.9rem;line-height:1.1}
-  .cifras span{display:block;color:var(--gris);font-size:.95rem;line-height:1.4;margin-top:.35rem}
-  .nosotras__sello{
-    aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
-    background:radial-gradient(circle at 50% 45%,var(--magenta) 0%,var(--vino) 45%,rgba(94,12,40,0) 72%);
-  }
-  .nosotras__sello img{width:72%;filter:drop-shadow(0 20px 40px rgba(0,0,0,.5))}
+  .portada__info{padding:clamp(1.5rem,6vh,4.5rem) 2.6rem 0;max-width:640px;flex:1}
+  .portada .titulo{font-size:clamp(2.6rem,5vw,4.1rem)}
+  .meta{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .8rem;margin-top:1rem;font-size:.9rem;color:rgba(255,255,255,.75)}
+  .meta strong{color:var(--destacado);font-weight:700}
+  .meta b{color:#fff;font-weight:700}
+  .portada__sinopsis{margin-top:1.1rem;max-width:46ch;font-size:1.02rem;color:rgba(255,255,255,.8)}
+  .acciones{display:flex;align-items:center;gap:1rem;margin-top:1.8rem}
 
-  /* Qué hacemos: tarjetas 16:9 */
-  .formatos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;padding:0 var(--margen)}
-  .formato{position:relative;border-radius:8px;overflow:hidden;background:var(--superficie);aspect-ratio:16/9}
-  .formato img,.formato video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-  .formato:hover img{transform:scale(1.05)}
-  .formato::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.2) 55%,rgba(0,0,0,0) 100%)}
-  .formato__texto{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:1.1rem 1.25rem}
-  .formato h3{font-family:var(--titulo);font-weight:700;font-size:1.35rem;letter-spacing:.02em}
-  .formato p{font-size:.98rem;color:var(--gris);line-height:1.4;margin-top:.2rem}
+  .fila{padding:2rem 2.6rem 2.4rem}
+  .fila__cabeza{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .fila__flechas{display:flex;gap:.5rem}
+  .fila__flechas button{width:34px;height:34px;border-radius:50%;border:1px solid var(--linea);display:grid;place-items:center;color:#fff;transition:background .2s}
+  .fila__flechas button:hover{background:rgba(255,255,255,.12)}
+  .fila__flechas button:disabled{opacity:.3;cursor:default;background:none}
+  .fila__flechas svg{width:16px;height:16px}
 
-  /* ---------- Equipo: carrusel con paralaje ---------- */
-  .carrusel{position:relative}
-  .carrusel__pista{
-    display:flex;gap:1.1rem;overflow-x:auto;scroll-snap-type:x mandatory;
-    padding:.5rem var(--margen) 1.5rem;scroll-padding-inline:var(--margen);
-    scrollbar-width:none;
+  .tira{
+    display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 5 * 1.1rem) / 6);gap:1.1rem;
+    overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;list-style:none;
+    padding:6px 4px 8px;margin:-6px -4px -8px;
   }
-  .carrusel__pista::-webkit-scrollbar{display:none}
-  .integrante{
-    flex:none;width:clamp(240px,24vw,330px);aspect-ratio:3/4.2;
-    position:relative;border-radius:10px;overflow:hidden;scroll-snap-align:start;
-    background:var(--superficie);
-    box-shadow:0 18px 40px rgba(0,0,0,.5);
+  .tira::-webkit-scrollbar{display:none}
+  .chica{scroll-snap-align:start}
+  .chica button{
+    display:block;width:100%;text-align:left;border-radius:8px;overflow:hidden;position:relative;
+    aspect-ratio:2/3;background:var(--tarjeta);
+    box-shadow:0 14px 30px rgba(0,0,0,.45);
+    outline:3px solid transparent;outline-offset:0;
+    transition:transform .25s ease, outline-color .2s;
   }
-  .integrante img{
-    position:absolute;top:0;left:-14%;width:128%;max-width:none;height:100%;object-fit:cover;
-    transform:translateX(var(--desplazar,0px));will-change:transform;
+  .chica button:hover,.chica button:focus-visible{transform:translateY(-6px);outline-color:#fff}
+  .chica img{width:100%;height:100%;object-fit:cover}
+  .chica__nombre{
+    position:absolute;left:0;right:0;bottom:0;padding:2.4rem .8rem .75rem;
+    background:linear-gradient(0deg,rgba(0,0,0,.88),rgba(0,0,0,0));
+    font-weight:900;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;color:#fff;line-height:1.2;
   }
-  .integrante::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.35) 38%,rgba(0,0,0,0) 60%)}
-  .integrante__texto{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:1.2rem 1.25rem 1.3rem}
-  .integrante h3{font-family:var(--titulo);font-weight:700;font-size:1.4rem;line-height:1.15;letter-spacing:.01em}
-  .integrante p{color:var(--gris);font-size:.98rem;line-height:1.35;margin-top:.3rem}
-  .flechas{display:flex;gap:.5rem}
-  .flecha{
-    width:46px;height:46px;border-radius:50%;cursor:pointer;
-    background:rgba(243,228,195,.08);border:1px solid var(--linea);
-    display:grid;place-items:center;transition:background .2s;
-  }
-  .flecha:hover{background:rgba(243,228,195,.2)}
-  .flecha:disabled{opacity:.3;cursor:default}
-  .flecha svg{width:20px;height:20px}
+  .chica__nombre span{display:block;font-weight:400;letter-spacing:.02em;text-transform:none;font-size:.78rem;color:rgba(255,255,255,.75);margin-top:.15rem}
 
-  /* ---------- Ficha del corto ---------- */
-  .ficha{
-    margin-top:4rem;padding:5.5rem var(--margen);
-    background:
-      radial-gradient(ellipse 60% 80% at 15% 50%,rgba(155,28,82,.38),rgba(0,0,0,0) 70%),
-      var(--superficie);
-    border-block:1px solid var(--linea);
-  }
-  .ficha__grilla{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:start;max-width:1240px;margin:0 auto}
-  .ficha__afiche{border-radius:8px;box-shadow:0 30px 70px rgba(0,0,0,.6)}
-  .ficha h2{font-family:var(--titulo);font-weight:700;font-size:clamp(2rem,4vw,3.2rem);line-height:1.08;letter-spacing:.01em}
-  .ficha .datos-titulo{margin-top:.9rem}
-  .ficha__sinopsis{margin-top:1.6rem;font-size:1.2rem;max-width:58ch}
-  .creditos{display:grid;grid-template-columns:max-content 1fr;gap:.55rem 2rem;margin-top:2.2rem;padding-top:1.8rem;border-top:1px solid var(--linea)}
-  .creditos dt{color:var(--gris);font-size:1rem}
-  .creditos dd{font-size:1.05rem}
-  .festival{display:flex;gap:1rem;align-items:center;margin-top:2.2rem;padding:1.1rem 1.3rem;border:1px solid var(--linea);border-radius:8px;max-width:620px}
-  .festival svg{width:40px;height:40px;flex:none}
-  .festival p{font-size:1rem;line-height:1.45}
-  .ficha__ancha{max-width:1240px;margin:4rem auto 0}
-  .ficha__ancha img{width:100%;border-radius:8px}
-  .ficha__ancha figcaption{margin-top:.8rem;color:var(--gris);font-size:.95rem}
+  /* ---------- Paneles de contenido ---------- */
+  .contenido{padding:3rem 2.6rem}
+  .contenido .titulo{font-size:clamp(1.9rem,3.4vw,2.6rem)}
+  .dos-columnas{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:3rem;align-items:center}
+  .texto p{max-width:60ch}
+  .texto p + p{margin-top:.9rem}
+  .texto .titulo{margin:.6rem 0 1.2rem}
+  .cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+  .cifra{background:rgba(255,255,255,.05);border:1px solid var(--linea);border-radius:14px;padding:1.1rem 1.2rem}
+  .cifra strong{display:block;font-weight:900;font-size:1.7rem;color:#fff;line-height:1.1}
+  .cifra span{display:block;font-size:.88rem;color:var(--suave);line-height:1.35;margin-top:.3rem}
+  .sello{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,rgba(184,20,106,.55) 0%,rgba(94,12,40,.35) 45%,rgba(0,0,0,0) 70%)}
+  .sello img{width:70%;filter:drop-shadow(0 18px 36px rgba(0,0,0,.55))}
 
-  /* ---------- Contacto ---------- */
-  .contacto{padding:7rem var(--margen) 6rem;text-align:center;position:relative;overflow:hidden}
-  .contacto::before{content:"";position:absolute;left:50%;top:55%;width:900px;height:900px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(155,28,82,.45),rgba(0,0,0,0) 62%);pointer-events:none}
-  .contacto > *{position:relative}
-  .contacto h2{font-family:var(--titulo);font-weight:700;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.08}
-  .contacto p{max-width:50ch;margin:1rem auto 0;color:var(--gris)}
-  .canales{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:2.6rem}
-  .canal{
-    display:flex;align-items:center;gap:.8rem;text-decoration:none;
-    padding:1rem 1.4rem .9rem;border-radius:8px;border:1px solid var(--linea);background:rgba(18,4,10,.7);
-    font-size:1.15rem;transition:border-color .2s, background .2s;
-  }
-  .canal:hover{border-color:var(--crema);background:rgba(94,12,40,.5)}
-  .canal svg{width:24px;height:24px;flex:none}
+  .formatos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;margin-top:1.4rem}
+  .formato{position:relative;aspect-ratio:16/10;border-radius:12px;overflow:hidden;background:var(--tarjeta);box-shadow:0 14px 30px rgba(0,0,0,.45)}
+  .formato img,.formato video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .formato::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.15) 60%)}
+  .formato__texto{position:absolute;z-index:1;left:0;right:0;bottom:0;padding:1.1rem 1.2rem}
+  .formato h3{font-weight:900;font-size:1.05rem;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+  .formato p{font-size:.9rem;color:rgba(255,255,255,.75);line-height:1.4;margin-top:.2rem}
 
-  .pie{border-top:1px solid var(--linea);padding:2rem var(--margen);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--gris);font-size:.95rem}
-  .pie img{height:38px;width:auto}
+  /* Ficha del corto */
+  .ficha{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:3rem;align-items:start}
+  .ficha__afiche{border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .ficha__titulo-velas{margin:-.4rem 0 0 -3%;width:min(520px,100%);aspect-ratio:16/5.2;overflow:hidden;position:relative}
+  .ficha__titulo-velas video{position:absolute;left:0;top:-25%;width:100%;mix-blend-mode:screen;filter:brightness(1.7) saturate(1.2)}
+  .ficha__sinopsis{margin-top:1rem;max-width:60ch}
+  .creditos{display:grid;grid-template-columns:max-content 1fr;gap:.45rem 2rem;margin-top:1.8rem;padding-top:1.5rem;border-top:1px solid var(--linea);font-size:.98rem}
+  .creditos dt{color:var(--suave)}
+  .creditos dd{color:#fff}
+  .aviso{display:flex;align-items:center;gap:.9rem;margin-top:1.8rem;padding:.9rem 1.1rem;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--linea);font-size:.95rem}
+  .aviso svg{width:30px;height:30px;flex:none;color:var(--destacado)}
+  .ficha__ancha{margin-top:2.6rem}
+  .ficha__ancha img{width:100%;border-radius:12px}
+
+  /* Contacto */
+  .contacto{text-align:center;padding:4rem 2.6rem}
+  .contacto .titulo{font-size:clamp(2rem,4vw,3rem)}
+  .contacto p{max-width:48ch;margin:1rem auto 0;color:var(--suave)}
+  .canales{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:2.2rem;list-style:none}
+  .canal{display:inline-flex;align-items:center;gap:.7rem;height:52px;padding:0 1.5rem;border-radius:999px;border:1px solid var(--linea);background:rgba(255,255,255,.05);color:#fff;font-weight:700;transition:background .2s,border-color .2s}
+  .canal:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4)}
+  .canal svg{width:20px;height:20px}
+
+  .pie{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:0 .4rem;color:var(--suave);font-size:.88rem}
+  .pie img{height:32px;width:auto}
+
+  /* ---------- Ficha de cada chica (ventana emergente) ---------- */
+  dialog{
+    margin:auto;border:1px solid var(--linea);border-radius:var(--radio);padding:0;overflow:hidden;
+    width:min(760px,calc(100% - 2rem));background:#111118;color:var(--texto);
+    box-shadow:0 40px 100px rgba(0,0,0,.7);
+  }
+  dialog::backdrop{background:rgba(5,5,8,.75);backdrop-filter:blur(6px)}
+  .modal{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+  .modal img{width:100%;height:100%;max-height:520px;object-fit:cover}
+  .modal__texto{padding:2.4rem 2.2rem;display:flex;flex-direction:column;justify-content:flex-end}
+  .modal__texto .titulo{font-size:1.9rem}
+  .modal__texto p{margin-top:.4rem;color:var(--destacado);font-weight:700}
+  .modal__texto small{margin-top:1.2rem;color:var(--suave);font-size:.92rem;line-height:1.5}
+  .cerrar{position:absolute;top:1rem;right:1rem;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center;color:#fff}
+  .cerrar svg{width:18px;height:18px}
 
   /* ---------- Responsive ---------- */
-  @media (max-width:980px){
-    .nosotras{grid-template-columns:1fr}
-    .nosotras__sello{max-width:320px;margin:0 auto}
+  @media (max-width:1080px){
+    .tira{grid-auto-columns:calc((100% - 3 * 1.1rem) / 4.3)}
+  }
+  @media (max-width:900px){
+    .dos-columnas,.ficha{grid-template-columns:1fr}
+    .sello{max-width:280px;margin:0 auto}
+    .ficha__afiche{max-width:320px}
     .formatos{grid-template-columns:1fr 1fr}
-    .ficha__grilla{grid-template-columns:1fr}
-    .ficha__afiche{max-width:360px}
   }
   @media (max-width:820px){
-    .abrir-menu{display:inline-block}
-    .barra nav{position:absolute;top:70px;left:0;right:0;display:none;flex-direction:column;align-items:flex-start;gap:1.2rem;background:rgba(0,0,0,.97);padding:1.5rem var(--margen) 2rem;border-bottom:1px solid var(--linea)}
-    .barra nav.abierto{display:flex}
-    .barra ul{flex-direction:column;gap:1.1rem}
-    .barra ul a{font-size:1.15rem;color:var(--crema)}
+    .barra ul{display:none}
+    .abrir-menu{display:grid}
+    .barra ul.abierto{
+      display:flex;flex-direction:column;gap:1.1rem;position:absolute;top:84px;left:1rem;right:1rem;z-index:10;
+      background:rgba(14,14,20,.97);border:1px solid var(--linea);border-radius:16px;padding:1.4rem 1.6rem;
+    }
+    .barra ul.abierto a{font-size:.95rem}
   }
-  @media (max-width:600px){
-    body{font-size:1.05rem}
-    .portada{min-height:auto;align-items:flex-end}
-    .portada__fondo img{width:100%;object-position:50% 30%}
-    .portada__fondo::after{background:linear-gradient(0deg,#000 0%,rgba(0,0,0,.85) 45%,rgba(0,0,0,.2) 80%)}
-    .portada__contenido{padding:52vh var(--margen) 3rem}
-    .portada__sinopsis{font-size:1.08rem}
+  @media (max-width:640px){
+    .pagina{width:100%;padding:0 0 2rem;gap:1rem}
+    .panel{border-radius:0;border-inline:0}
+    .portada{min-height:92svh}
+    .portada__foto img{object-position:58% 20%}
+    .barra{padding:1.1rem 1.25rem}
+    .portada__info{padding:38vh 1.25rem 0}
+    .fila{padding:1.8rem 1.25rem 2rem}
+    .fila__flechas{display:none}
+    .tira{grid-auto-columns:40%;gap:.8rem}
+    .contenido,.contacto{padding:2.4rem 1.25rem}
+    .cifras{grid-template-columns:1fr}
     .formatos{grid-template-columns:1fr}
-    .cifras{grid-template-columns:1fr;gap:0}
-    .cifras div{padding-top:1rem}
-    .flechas{display:none}
-    .integrante{width:76vw}
-    .creditos{grid-template-columns:1fr;gap:.1rem}
+    .creditos{grid-template-columns:1fr;gap:0}
     .creditos dd{margin-bottom:.6rem}
-    .canal{width:100%;justify-content:center}
+    .modal{grid-template-columns:1fr}
+    .modal img{max-height:52vh}
+    .modal__texto{padding:1.6rem}
+    .pie{padding:0 1.25rem}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
-    .portada__fondo img{animation:none;transform:none}
-    .integrante img{transform:none}
-    .formato img{transition:none}
+    .chica button,.boton{transition:none}
+    .chica button:hover{transform:none}
   }
 </style>
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
+<div class="fondo" aria-hidden="true"><img src="img/portada-desenfocada.jpg" alt=""></div>
 
-<header class="barra" id="barra">
-  <a class="barra__logo" href="#inicio" aria-label="LoopFilms, volver al inicio"><img src="img/logo-loop.png" alt="LoopFilms"></a>
-  <button class="abrir-menu" aria-expanded="false" aria-controls="navegacion">Menú</button>
-  <nav id="navegacion" aria-label="Principal">
-    <ul>
-      <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#nosotras">Quiénes somos</a></li>
-      <li><a href="#formatos">Qué hacemos</a></li>
-      <li><a href="#equipo">Equipo</a></li>
-      <li><a href="#proyecto">He visto a Luci</a></li>
-    </ul>
-    <a class="boton boton--chico" href="#contacto">Contacto</a>
-  </nav>
-</header>
+<main class="pagina" id="contenido">
 
-<main id="contenido">
+  <!-- ===== Portada ===== -->
+  <section class="panel portada" id="inicio" aria-labelledby="titulo-portada">
+    <div class="portada__foto"><img src="img/portada.jpg" alt="" fetchpriority="high"></div>
 
-  <!-- Portada: el corto destacado -->
-  <section class="portada" id="inicio">
-    <div class="portada__fondo">
-      <img src="img/fondo-portada.jpg" alt="" fetchpriority="high">
-    </div>
-    <div class="portada__contenido">
-      <p class="portada__firma"><img src="img/logo-loop.png" alt="">Una producción de LoopFilms</p>
-      <h1 class="oculto">He visto a Luci</h1>
-      <div class="portada__titulo" aria-hidden="true">
-        <video poster="img/titulo-poster.jpg" autoplay muted playsinline>
-          <source src="video/titulo-he-visto-a-luci.webm" type="video/webm">
-          <source src="video/titulo-he-visto-a-luci.mp4" type="video/mp4">
-        </video>
+    <header class="barra">
+      <div class="barra__izq">
+        <a class="barra__logo" href="#inicio" aria-label="LoopFilms, inicio"><img src="img/logo-loop.png" alt="LoopFilms"></a>
+        <nav aria-label="Principal">
+          <ul id="menu">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotras">Nosotras</a></li>
+            <li><a href="#formatos">Qué hacemos</a></li>
+            <li><a href="#proyecto">He visto a Luci</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </nav>
       </div>
-      <div class="datos-titulo">
-        <span class="estado">En desarrollo</span>
-        <span>Cortometraje</span>
-        <span>Suspenso</span>
-        <span>2026</span>
+      <div class="barra__der">
+        <a href="https://www.instagram.com/loopfilmsok" target="_blank" rel="noopener" aria-label="Instagram de LoopFilms">
+          <svg class="barra__icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="mailto:loopfilmsok@gmail.com" aria-label="Escribir a LoopFilms">
+          <svg class="barra__icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>
+        </a>
+        <span class="barra__avatar" aria-hidden="true"><img src="img/logo-loop.png" alt=""></span>
+        <button class="abrir-menu" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
       </div>
-      <p class="portada__sinopsis">En el festejo de sus 21 años, Lucía recibe un collar de parte de su amigo Lautaro que desata una serie de sucesos inexplicables y un progresivo deterioro físico.</p>
-      <div class="portada__acciones">
+    </header>
+
+    <div class="portada__info">
+      <h1 class="titulo" id="titulo-portada">He visto<br>a Luci</h1>
+      <div class="meta">
+        <span>Una producción de LoopFilms</span>
+        <strong>En desarrollo</strong>
+        <b>2026</b>
+      </div>
+      <p class="portada__sinopsis">En el festejo de sus 21 años, Lucía recibe un collar que desata una serie de sucesos inexplicables.</p>
+      <div class="acciones">
         <a class="boton" href="#proyecto">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5Z"/></svg>
-          Ver el proyecto
+          Ver proyecto
         </a>
-        <a class="boton boton--gris" href="#equipo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>
-          Conocé al equipo
+        <a class="boton-redondo" href="#contacto" aria-label="Contactar a LoopFilms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
         </a>
       </div>
     </div>
-  </section>
 
-  <!-- Quiénes somos -->
-  <section class="fila" id="nosotras">
-    <div class="nosotras">
-      <div>
-        <h2>¿Quiénes somos?</h2>
-        <p style="margin-top:1.2rem">LoopFilms es una productora universitaria emergente enfocada en la creación de contenidos cinematográficos independientes. Buscamos dar voz a historias jóvenes, explorando nuevas narrativas y formatos visuales a través de la experimentación y el trabajo colaborativo.</p>
-        <p>Somos seis estudiantes de la Tecnicatura en Diseño de Imagen, Sonido y Multimedia de la FADyCC (UNNE), en Corrientes Capital.</p>
-        <div class="cifras">
-          <div><strong>6</strong><span>integrantes, cada una a cargo de un área</span></div>
-          <div><strong>FADyCC</strong><span>Universidad Nacional del Nordeste</span></div>
-          <div><strong>2026</strong><span>pitching en el Festival del Sol</span></div>
+    <div class="fila" id="equipo">
+      <div class="fila__cabeza">
+        <h2 class="etiqueta">El equipo</h2>
+        <div class="fila__flechas">
+          <button data-dir="-1" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 5-7 7 7 7"/></svg></button>
+          <button data-dir="1" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 5 7 7-7 7"/></svg></button>
         </div>
       </div>
-      <div class="nosotras__sello"><img src="img/logo-loop.png" alt="Logo de LoopFilms: una estrella bordó con la palabra Loop y un rollo de película"></div>
-    </div>
-  </section>
-
-  <!-- Qué hacemos -->
-  <section class="fila" id="formatos">
-    <div class="fila__cabeza">
-      <div>
-        <h2>Qué hacemos</h2>
-        <p class="fila__nota">Nos ocupamos de todo el proceso: guion, rodaje, sonido, arte y montaje.</p>
-      </div>
-    </div>
-    <div class="formatos">
-      <article class="formato">
-        <img src="img/portada-he-visto-a-luci.jpg" alt="" loading="lazy">
-        <div class="formato__texto">
-          <h3>Cortometrajes</h3>
-          <p>Ficción de autor, desde la idea hasta la copia final.</p>
-        </div>
-      </article>
-      <article class="formato">
-        <video src="video/titulo-he-visto-a-luci.mp4" poster="img/titulo-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
-        <div class="formato__texto">
-          <h3>Teasers</h3>
-          <p>Piezas cortas para presentar un proyecto y generar expectativa.</p>
-        </div>
-      </article>
-      <article class="formato">
-        <img src="img/poster-he-visto-a-luci.jpg" alt="" loading="lazy" style="object-position:50% 40%">
-        <div class="formato__texto">
-          <h3>Tráilers</h3>
-          <p>El tono de una película o un evento, en un par de minutos.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Equipo -->
-  <section class="fila" id="equipo" aria-roledescription="carrusel" aria-label="Equipo de LoopFilms">
-    <div class="fila__cabeza">
-      <div>
-        <h2>El equipo</h2>
-        <p class="fila__nota">Seis estudiantes, seis áreas. Las fotos son del rodaje de <em>He visto a Luci</em>.</p>
-      </div>
-      <div class="flechas">
-        <button class="flecha" data-dir="-1" aria-label="Ver integrantes anteriores">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 5-7 7 7 7"/></svg>
-        </button>
-        <button class="flecha" data-dir="1" aria-label="Ver más integrantes">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 5 7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="carrusel">
-      <ul class="carrusel__pista" role="list">
-        <li class="integrante">
-          <img src="img/martina-mercado.jpg" alt="Martina Mercado soplando las velas de una torta" loading="lazy">
-          <div class="integrante__texto"><h3>Martina Mercado</h3><p>Dirección, guion y montaje</p></div>
-        </li>
-        <li class="integrante">
-          <img src="img/ludmila-castillo.jpg" alt="Ludmila Castillo sentada frente a una torta con velas" loading="lazy">
-          <div class="integrante__texto"><h3>Ludmila Castillo</h3><p>Producción</p></div>
-        </li>
-        <li class="integrante">
-          <img src="img/jaida-aldado.jpg" alt="Jaida Aldado mirando a cámara detrás de una torta con velas" loading="lazy" style="object-position:50% 30%">
-          <div class="integrante__texto"><h3>Jaida Aldado</h3><p>Dirección de fotografía</p></div>
-        </li>
-        <li class="integrante">
-          <img src="img/paulina-bearzzotti.jpg" alt="Paulina Bearzzotti soplando una vela" loading="lazy">
-          <div class="integrante__texto"><h3>Paulina Bearzzotti</h3><p>Dirección de sonido</p></div>
-        </li>
-        <li class="integrante">
-          <img src="img/guillermina-veron.jpg" alt="Guillermina Veron encendiendo las velas de una torta" loading="lazy">
-          <div class="integrante__texto"><h3>Guillermina Veron</h3><p>Dirección de arte</p></div>
-        </li>
-        <li class="integrante">
-          <img src="img/sabina-villordo.jpg" alt="Sabina Villordo sonriendo frente a una torta con velas" loading="lazy">
-          <div class="integrante__texto"><h3>Sabina Villordo</h3><p>Asistencia de producción y dirección</p></div>
-        </li>
+      <ul class="tira">
+        <li class="chica"><button data-nombre="Martina Mercado" data-rol="Dirección, guion y montaje" data-foto="img/martina-mercado.jpg">
+          <img src="img/martina-mercado.jpg" alt="">
+          <span class="chica__nombre">Martina Mercado<span>Dirección, guion y montaje</span></span>
+        </button></li>
+        <li class="chica"><button data-nombre="Ludmila Castillo" data-rol="Producción" data-foto="img/ludmila-castillo.jpg">
+          <img src="img/ludmila-castillo.jpg" alt="">
+          <span class="chica__nombre">Ludmila Castillo<span>Producción</span></span>
+        </button></li>
+        <li class="chica"><button data-nombre="Jaida Aldado" data-rol="Dirección de fotografía" data-foto="img/jaida-aldado.jpg">
+          <img src="img/jaida-aldado.jpg" alt="" style="object-position:50% 30%">
+          <span class="chica__nombre">Jaida Aldado<span>Dirección de fotografía</span></span>
+        </button></li>
+        <li class="chica"><button data-nombre="Paulina Bearzzotti" data-rol="Dirección de sonido" data-foto="img/paulina-bearzzotti.jpg">
+          <img src="img/paulina-bearzzotti.jpg" alt="">
+          <span class="chica__nombre">Paulina Bearzzotti<span>Dirección de sonido</span></span>
+        </button></li>
+        <li class="chica"><button data-nombre="Guillermina Veron" data-rol="Dirección de arte" data-foto="img/guillermina-veron.jpg">
+          <img src="img/guillermina-veron.jpg" alt="">
+          <span class="chica__nombre">Guillermina Veron<span>Dirección de arte</span></span>
+        </button></li>
+        <li class="chica"><button data-nombre="Sabina Villordo" data-rol="Asistencia de producción y dirección" data-foto="img/sabina-villordo.jpg">
+          <img src="img/sabina-villordo.jpg" alt="">
+          <span class="chica__nombre">Sabina Villordo<span>Asist. de producción y dirección</span></span>
+        </button></li>
       </ul>
     </div>
   </section>
 
-  <!-- Ficha del corto -->
-  <section class="ficha" id="proyecto">
-    <div class="ficha__grilla">
-      <img class="ficha__afiche" src="img/poster-he-visto-a-luci.jpg" alt="Afiche de He visto a Luci: una joven detrás de una torta de cumpleaños con velas encendidas" loading="lazy">
+  <!-- ===== Quiénes somos ===== -->
+  <section class="panel contenido" id="nosotras">
+    <div class="dos-columnas">
+      <div class="texto">
+        <h2 class="etiqueta">Nosotras</h2>
+        <p class="titulo">Una productora universitaria de Corrientes</p>
+        <p>LoopFilms es una productora universitaria emergente enfocada en la creación de contenidos cinematográficos independientes. Buscamos dar voz a historias jóvenes, explorando nuevas narrativas y formatos visuales a través de la experimentación y el trabajo colaborativo.</p>
+        <p>Somos seis estudiantes de la Tecnicatura en Diseño de Imagen, Sonido y Multimedia de la FADyCC (UNNE), en Corrientes Capital.</p>
+        <div class="cifras">
+          <div class="cifra"><strong>6</strong><span>integrantes, una por área</span></div>
+          <div class="cifra"><strong>FADyCC</strong><span>Universidad Nacional del Nordeste</span></div>
+          <div class="cifra"><strong>2026</strong><span>pitching en el Festival del Sol</span></div>
+        </div>
+      </div>
+      <div class="sello"><img src="img/logo-loop.png" alt="Logo de LoopFilms"></div>
+    </div>
+  </section>
+
+  <!-- ===== Qué hacemos ===== -->
+  <section class="panel contenido" id="formatos">
+    <h2 class="etiqueta">Qué hacemos</h2>
+    <p style="margin-top:.4rem;color:var(--suave)">Nos ocupamos de todo el proceso: guion, rodaje, sonido, arte y montaje.</p>
+    <div class="formatos">
+      <article class="formato">
+        <img src="img/portada-he-visto-a-luci.jpg" alt="" loading="lazy">
+        <div class="formato__texto"><h3>Cortometrajes</h3><p>Ficción de autor, de la idea a la copia final.</p></div>
+      </article>
+      <article class="formato">
+        <video muted loop playsinline preload="none" poster="img/titulo-poster.jpg" aria-hidden="true">
+          <source src="video/titulo-he-visto-a-luci.mp4" type="video/mp4">
+        </video>
+        <div class="formato__texto"><h3>Teasers</h3><p>Piezas cortas para presentar un proyecto.</p></div>
+      </article>
+      <article class="formato">
+        <img src="img/poster-he-visto-a-luci.jpg" alt="" loading="lazy" style="object-position:50% 45%">
+        <div class="formato__texto"><h3>Tráilers</h3><p>El tono de una película en un par de minutos.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== He visto a Luci ===== -->
+  <section class="panel contenido" id="proyecto">
+    <div class="ficha">
+      <img class="ficha__afiche" src="img/poster-he-visto-a-luci.jpg" alt="Afiche de He visto a Luci" loading="lazy">
       <div>
-        <h2>He visto a Luci</h2>
-        <div class="datos-titulo">
-          <span class="estado">En desarrollo</span>
-          <span>Cortometraje</span>
-          <span>Suspenso</span>
-          <span>2026</span>
+        <h2 class="etiqueta">Nuestro primer cortometraje</h2>
+        <p class="oculto">He visto a Luci</p>
+        <div class="ficha__titulo-velas" aria-hidden="true">
+          <video muted playsinline preload="none" poster="img/titulo-poster.jpg">
+            <source src="video/titulo-he-visto-a-luci.webm" type="video/webm">
+            <source src="video/titulo-he-visto-a-luci.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="meta" style="margin-top:0">
+          <span>Cortometraje</span><span>Suspenso</span><strong>En desarrollo</strong><b>2026</b>
         </div>
         <p class="ficha__sinopsis">En el festejo de sus 21 años, Lucía recibe un collar de parte de su amigo Lautaro que desata una serie de sucesos inexplicables y un progresivo deterioro físico. Cuando el objeto es apartado y la calma parece regresar, su reaparición en la habitación de Lucía revela que la pesadilla continúa…</p>
         <dl class="creditos">
@@ -407,100 +413,100 @@
           <dt>Dirección de arte</dt><dd>Guillermina Veron</dd>
           <dt>Asistencia de producción y dirección</dt><dd>Sabina Villordo</dd>
         </dl>
-        <div class="festival">
-          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="20" cy="20" r="7"/><path d="M20 3v6M20 31v6M3 20h6M31 20h6M8 8l4.2 4.2M27.8 27.8 32 32M32 8l-4.2 4.2M12.2 27.8 8 32"/></svg>
-          <p><strong>Festival del Sol 2026.</strong> Presentamos LoopFilms y el proyecto en la instancia de pitching del festival.</p>
+        <div class="aviso">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="20" cy="20" r="7"/><path d="M20 3v6M20 31v6M3 20h6M31 20h6M8 8l4.2 4.2M27.8 27.8 32 32M32 8l-4.2 4.2M12.2 27.8 8 32"/></svg>
+          <span><b style="color:#fff">Festival del Sol 2026.</b> Presentamos el proyecto en la instancia de pitching.</span>
         </div>
       </div>
     </div>
-    <figure class="ficha__ancha">
-      <img src="img/portada-he-visto-a-luci.jpg" alt="Portada de He visto a Luci con el elenco, los créditos del equipo y los logos de la UNNE, la FADyCC y LoopFilms" loading="lazy">
-      <figcaption>Una producción de LoopFilms con la Facultad de Artes, Diseño y Ciencias de la Cultura (UNNE).</figcaption>
-    </figure>
+    <img class="ficha__ancha" src="img/portada-he-visto-a-luci.jpg" alt="Portada de He visto a Luci con el elenco y los créditos" loading="lazy">
   </section>
 
-  <!-- Contacto -->
-  <section class="contacto" id="contacto">
-    <h2>Filmemos algo juntas</h2>
+  <!-- ===== Contacto ===== -->
+  <section class="panel contacto" id="contacto">
+    <h2 class="titulo">Filmemos algo juntas</h2>
     <p>¿Tenés una historia para contar o un proyecto que necesita teaser o tráiler? Escribinos y lo charlamos.</p>
     <ul class="canales">
-      <li>
-        <a class="canal" href="mailto:loopfilmsok@gmail.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>
-          loopfilmsok@gmail.com
-        </a>
-      </li>
-      <li>
-        <a class="canal" href="https://www.instagram.com/loopfilmsok" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-          @loopfilmsok
-        </a>
-      </li>
+      <li><a class="canal" href="mailto:loopfilmsok@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>
+        loopfilmsok@gmail.com</a></li>
+      <li><a class="canal" href="https://www.instagram.com/loopfilmsok" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        @loopfilmsok</a></li>
     </ul>
   </section>
+
+  <footer class="pie">
+    <img src="img/logo-loop.png" alt="LoopFilms">
+    <span>© 2026 LoopFilms · Corrientes Capital, Argentina</span>
+  </footer>
 </main>
 
-<footer class="pie">
-  <img src="img/logo-loop.png" alt="LoopFilms">
-  <p>© 2026 LoopFilms, productora audiovisual. Corrientes Capital, Argentina.</p>
-</footer>
+<!-- Ficha de cada integrante -->
+<dialog id="ficha-chica" aria-labelledby="ficha-nombre">
+  <div class="modal">
+    <img id="ficha-foto" src="" alt="">
+    <div class="modal__texto">
+      <span class="etiqueta" style="color:var(--suave)">LoopFilms</span>
+      <h3 class="titulo" id="ficha-nombre"></h3>
+      <p id="ficha-rol"></p>
+      <small>Integrante del equipo de <em>He visto a Luci</em>, el primer cortometraje de LoopFilms.</small>
+    </div>
+  </div>
+  <button class="cerrar" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</dialog>
 
 <script>
-  // Barra: se vuelve sólida al bajar
-  const barra = document.getElementById('barra');
-  const alBajar = () => barra.classList.toggle('solida', scrollY > 40);
-  addEventListener('scroll', alBajar, {passive:true}); alBajar();
-
   // Menú en celular
   const botonMenu = document.querySelector('.abrir-menu');
-  const nav = document.getElementById('navegacion');
-  const cerrarMenu = () => { nav.classList.remove('abierto'); botonMenu.setAttribute('aria-expanded','false'); botonMenu.textContent = 'Menú'; };
+  const menu = document.getElementById('menu');
   botonMenu.addEventListener('click', () => {
-    const abierto = nav.classList.toggle('abierto');
+    const abierto = menu.classList.toggle('abierto');
     botonMenu.setAttribute('aria-expanded', abierto);
-    botonMenu.textContent = abierto ? 'Cerrar' : 'Menú';
   });
-  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', cerrarMenu));
-
-  // Título con velas: se reproduce una vez y queda quieto antes de apagarse
-  const tituloVideo = document.querySelector('.portada__titulo video');
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { tituloVideo.removeAttribute('autoplay'); tituloVideo.pause(); }
-  tituloVideo.addEventListener('timeupdate', () => { if (tituloVideo.currentTime >= 3.6) tituloVideo.pause(); });
-
-  // Tarjeta "Teasers": el video se reproduce al pasar el mouse
-  document.querySelectorAll('.formato video').forEach(v => {
-    const tarjeta = v.closest('.formato');
-    tarjeta.addEventListener('mouseenter', () => { v.play().catch(()=>{}); });
-    tarjeta.addEventListener('mouseleave', () => { v.pause(); });
-  });
-
-  // Carrusel del equipo: flechas + paralaje de las fotos
-  const pista = document.querySelector('.carrusel__pista');
-  const tarjetas = [...pista.querySelectorAll('.integrante')];
-  const [atras, adelante] = document.querySelectorAll('.flecha');
-  const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function actualizar(){
-    const centro = innerWidth / 2;
-    if (!sinMovimiento) {
-      tarjetas.forEach(t => {
-        const r = t.getBoundingClientRect();
-        const distancia = (r.left + r.width / 2 - centro) / innerWidth; // -1 a 1
-        t.style.setProperty('--desplazar', (-distancia * r.width * 0.22).toFixed(1) + 'px');
-      });
-    }
-    atras.disabled = pista.scrollLeft < 8;
-    adelante.disabled = pista.scrollLeft + pista.clientWidth > pista.scrollWidth - 8;
-  }
-  let pendiente = false;
-  const pedir = () => { if (!pendiente) { pendiente = true; requestAnimationFrame(() => { pendiente = false; actualizar(); }); } };
-  pista.addEventListener('scroll', pedir, {passive:true});
-  addEventListener('resize', pedir);
-  [atras, adelante].forEach(b => b.addEventListener('click', () => {
-    const paso = tarjetas[0].getBoundingClientRect().width + 18;
-    pista.scrollBy({left: paso * Number(b.dataset.dir), behavior: sinMovimiento ? 'auto' : 'smooth'});
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('abierto'); botonMenu.setAttribute('aria-expanded', 'false');
   }));
-  actualizar();
+
+  // Fila del equipo: flechas
+  const tira = document.querySelector('.tira');
+  const [atras, adelante] = document.querySelectorAll('.fila__flechas button');
+  const revisarFlechas = () => {
+    atras.disabled = tira.scrollLeft < 6;
+    adelante.disabled = tira.scrollLeft + tira.clientWidth > tira.scrollWidth - 6;
+  };
+  [atras, adelante].forEach(b => b.addEventListener('click', () => {
+    tira.scrollBy({left: tira.clientWidth * 0.8 * Number(b.dataset.dir), behavior: 'smooth'});
+  }));
+  tira.addEventListener('scroll', revisarFlechas, {passive: true});
+  addEventListener('resize', revisarFlechas); revisarFlechas();
+
+  // Ficha de cada chica
+  const dialogo = document.getElementById('ficha-chica');
+  document.querySelectorAll('.chica button').forEach(b => b.addEventListener('click', () => {
+    document.getElementById('ficha-foto').src = b.dataset.foto;
+    document.getElementById('ficha-foto').alt = 'Foto de ' + b.dataset.nombre;
+    document.getElementById('ficha-nombre').textContent = b.dataset.nombre;
+    document.getElementById('ficha-rol').textContent = b.dataset.rol;
+    dialogo.showModal();
+  }));
+  dialogo.querySelector('.cerrar').addEventListener('click', () => dialogo.close());
+  dialogo.addEventListener('click', e => { if (e.target === dialogo) dialogo.close(); });
+
+  // Videos: el de "Teasers" se reproduce al pasar el mouse; el del título, cuando aparece en pantalla
+  document.querySelectorAll('.formato video').forEach(v => {
+    const t = v.closest('.formato');
+    t.addEventListener('mouseenter', () => v.play().catch(()=>{}));
+    t.addEventListener('mouseleave', () => v.pause());
+  });
+  const velas = document.querySelector('.ficha__titulo-velas video');
+  const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  velas.addEventListener('timeupdate', () => { if (velas.currentTime >= 3.6) velas.pause(); });
+  if (!sinMovimiento && 'IntersectionObserver' in window) {
+    new IntersectionObserver((entradas, obs) => {
+      entradas.forEach(e => { if (e.isIntersecting) { velas.play().catch(()=>{}); obs.disconnect(); } });
+    }, {threshold: .6}).observe(velas);
+  }
 </script>
 </body>
 </html>
