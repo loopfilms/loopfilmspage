@@ -159,6 +159,13 @@
   .portada__info{padding:clamp(2rem,10vh,7rem) var(--lado) 0;flex:1}
   .portada__info > *{max-width:560px}
   .portada .titulo{font-size:clamp(2.8rem,5.4vw,4.6rem)}
+  .portada__titulo-velas{margin:0 0 .4rem -2%;width:min(640px,100%);line-height:0}
+  .portada__titulo-velas img{width:100%;height:auto;animation:titilar 3.2s ease-in-out infinite}
+  @keyframes titilar{
+    0%,100%{filter:drop-shadow(0 0 6px rgba(255,150,70,.25)) brightness(1.15)}
+    35%{filter:drop-shadow(0 0 12px rgba(255,150,70,.4)) brightness(1.28)}
+    55%{filter:drop-shadow(0 0 8px rgba(255,150,70,.3)) brightness(1.18)}
+  }
   .meta{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .8rem;margin-top:1rem;font-size:.9rem;color:rgba(255,255,255,.75)}
   .meta strong{color:var(--destacado);font-weight:700}
   .meta b{color:#fff;font-weight:700}
@@ -316,7 +323,7 @@
     html{scroll-behavior:auto}
     .chica button,.boton{transition:none}
     .chica button:hover{transform:none}
-    .cinta__revelar,.cinta__agujeros,.cinta__cuadros,.cinta__flotar,.intro__estrella,.intro__letras,.intro::after,.intro__bajar,.intro__bajar svg{animation:none}
+    .portada__titulo-velas img,.cinta__revelar,.cinta__agujeros,.cinta__cuadros,.cinta__flotar,.intro__estrella,.intro__letras,.intro::after,.intro__bajar,.intro__bajar svg{animation:none}
     .cinta__revelar{stroke-dashoffset:0}
   }
 </style>
@@ -403,7 +410,7 @@
 
 
     <div class="portada__info">
-      <h1 class="titulo" id="titulo-portada">He visto<br>a Luci</h1>
+      <h1 class="portada__titulo-velas" id="titulo-portada"><img src="img/titulo-he-visto-a-luci.png" alt="He visto a Luci" width="1303" height="419"></h1>
       <div class="meta">
         <span>Una producción de LoopFilms</span>
         <strong>En desarrollo</strong>
