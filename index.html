@@ -99,6 +99,33 @@
     100%{transform:scale(1);opacity:1;filter:blur(0) drop-shadow(0 18px 30px rgba(0,0,0,.55))}
   }
   @keyframes destello{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+
+  /* Cintas de película en las esquinas de la intro */
+  .cinta{
+    /* La cinta corta la esquina en diagonal: --k es la distancia de la esquina al centro de la cinta */
+    --k:22vw; --alto:clamp(70px,8.2vw,118px); --largo:46vw; --baja:0px;
+    position:absolute;z-index:0;width:var(--largo);height:var(--alto);overflow:hidden;
+    background:#050507;box-shadow:0 20px 50px rgba(0,0,0,.6);
+  }
+  .cinta::before,.cinta::after{
+    content:"";position:absolute;left:0;right:0;z-index:2;height:clamp(6px,.75vw,10px);
+    background-image:repeating-linear-gradient(90deg,transparent 0 9px,rgba(243,228,195,.75) 9px 19px,transparent 19px 28px);
+  }
+  .cinta::before{top:clamp(5px,.6vw,8px)}
+  .cinta::after{bottom:clamp(5px,.6vw,8px)}
+  .cinta__pista{
+    display:flex;gap:clamp(6px,.7vw,10px);height:100%;width:max-content;
+    padding:clamp(17px,2vw,26px) 0;
+  }
+  .cinta__pista img{height:100%;width:auto;aspect-ratio:3/2;object-fit:cover;filter:sepia(.35) saturate(.85) brightness(.72) contrast(1.05);border-radius:2px}
+  .cinta--sup{left:calc(var(--k) / 2 - var(--largo) / 2);top:calc(var(--k) / 2 - var(--alto) / 2 + var(--baja));transform:rotate(-45deg);animation:entrar-izq 1.6s .2s cubic-bezier(.16,.8,.3,1) both}
+  .cinta--inf{right:calc(var(--k) / 2 - var(--largo) / 2);bottom:calc(var(--k) / 2 - var(--alto) / 2);transform:rotate(-45deg);animation:entrar-der 1.6s .2s cubic-bezier(.16,.8,.3,1) both}
+  .cinta--sup .cinta__pista{animation:correr 60s 1.8s linear infinite}
+  .cinta--inf .cinta__pista{animation:correr 60s 1.8s linear infinite reverse}
+  @keyframes entrar-izq{from{transform:rotate(-45deg) translateX(-110%)}to{transform:rotate(-45deg) translateX(0)}}
+  @keyframes entrar-der{from{transform:rotate(-45deg) translateX(110%)}to{transform:rotate(-45deg) translateX(0)}}
+  @keyframes correr{to{transform:translateX(-50%)}}
+  .intro__logo,.intro__bajar{z-index:2}
   .intro__bajar{
     position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);
     display:flex;flex-direction:column;align-items:center;gap:.5rem;
@@ -279,6 +306,8 @@
       -webkit-mask-image:linear-gradient(to bottom,#000 40%,transparent 78%);mask-image:linear-gradient(to bottom,#000 40%,transparent 78%)}
     .portada__foto{background:radial-gradient(ellipse 80% 40% at 50% 26%,rgba(184,20,106,.5),rgba(9,9,13,0) 75%),#09090d}
     .barra{padding:1.1rem var(--lado)}
+    .cinta{--k:46vw;--alto:60px;--largo:100vw;--baja:40px}
+    .barra{background:rgba(9,9,13,.96)}
     .portada__info{padding:calc(36vh + 40px) var(--lado) 0}
     .fila{padding:1.8rem var(--lado) 2.4rem}
     .fila__flechas{display:none}
@@ -297,7 +326,7 @@
     html{scroll-behavior:auto}
     .chica button,.boton{transition:none}
     .chica button:hover{transform:none}
-    .intro__estrella,.intro__letras,.intro::after,.intro__bajar,.intro__bajar svg{animation:none}
+    .cinta,.cinta__pista,.intro__estrella,.intro__letras,.intro::after,.intro__bajar,.intro__bajar svg{animation:none}
   }
 </style>
 </head>
@@ -338,6 +367,8 @@
 
   <!-- ===== Intro: logo animado ===== -->
   <section class="intro" id="inicio" aria-label="LoopFilms">
+    <div class="cinta cinta--sup" aria-hidden="true"><div class="cinta__pista"><img src="img/cinta/martina-mercado.jpg" alt=""><img src="img/cinta/portada-he-visto-a-luci.jpg" alt=""><img src="img/cinta/ludmila-castillo.jpg" alt=""><img src="img/cinta/jaida-aldado.jpg" alt=""><img src="img/cinta/poster-he-visto-a-luci.jpg" alt=""><img src="img/cinta/paulina-bearzzotti.jpg" alt=""><img src="img/cinta/guillermina-veron.jpg" alt=""><img src="img/cinta/sabina-villordo.jpg" alt=""><img src="img/cinta/martina-mercado.jpg" alt=""><img src="img/cinta/portada-he-visto-a-luci.jpg" alt=""><img src="img/cinta/ludmila-castillo.jpg" alt=""><img src="img/cinta/jaida-aldado.jpg" alt=""><img src="img/cinta/poster-he-visto-a-luci.jpg" alt=""><img src="img/cinta/paulina-bearzzotti.jpg" alt=""><img src="img/cinta/guillermina-veron.jpg" alt=""><img src="img/cinta/sabina-villordo.jpg" alt=""></div></div>
+    <div class="cinta cinta--inf" aria-hidden="true"><div class="cinta__pista"><img src="img/cinta/sabina-villordo.jpg" alt=""><img src="img/cinta/poster-he-visto-a-luci.jpg" alt=""><img src="img/cinta/guillermina-veron.jpg" alt=""><img src="img/cinta/paulina-bearzzotti.jpg" alt=""><img src="img/cinta/portada-he-visto-a-luci.jpg" alt=""><img src="img/cinta/jaida-aldado.jpg" alt=""><img src="img/cinta/ludmila-castillo.jpg" alt=""><img src="img/cinta/martina-mercado.jpg" alt=""><img src="img/cinta/sabina-villordo.jpg" alt=""><img src="img/cinta/poster-he-visto-a-luci.jpg" alt=""><img src="img/cinta/guillermina-veron.jpg" alt=""><img src="img/cinta/paulina-bearzzotti.jpg" alt=""><img src="img/cinta/portada-he-visto-a-luci.jpg" alt=""><img src="img/cinta/jaida-aldado.jpg" alt=""><img src="img/cinta/ludmila-castillo.jpg" alt=""><img src="img/cinta/martina-mercado.jpg" alt=""></div></div>
     <div class="intro__logo" role="img" aria-label="Logo de LoopFilms">
       <svg class="intro__estrella" viewBox="0 0 695 674" aria-hidden="true">
         <defs>
