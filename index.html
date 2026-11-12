@@ -111,23 +111,21 @@
 
   /* ---------- Portada (la pantalla de la referencia) ---------- */
   .portada{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;background:#09090d;padding-top:80px}
-  .portada__foto{
-    position:absolute;inset:0;z-index:0;
-    background:
-      radial-gradient(ellipse 40% 52% at 72% 40%,rgba(184,20,106,.28) 0%,rgba(110,14,52,.2) 40%,rgba(9,9,13,0) 75%),
-      radial-gradient(ellipse 70% 60% at 85% 10%,rgba(94,12,40,.45),rgba(9,9,13,0) 70%),
-      #09090d;
+  .portada__foto{position:absolute;inset:0;z-index:0;background:#09090d}
+  .portada__foto img{
+    position:absolute;top:0;right:0;width:84%;height:auto;aspect-ratio:16/9;object-fit:cover;filter:brightness(1.15);
+    -webkit-mask-image:linear-gradient(to bottom,#000 48%,transparent 76%),linear-gradient(to right,transparent 0%,transparent 19%,#000 45%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to bottom,#000 48%,transparent 76%),linear-gradient(to right,transparent 0%,transparent 19%,#000 45%);
+    mask-composite:intersect;
   }
   .portada__foto::after{
     content:"";position:absolute;inset:0;
-    background:linear-gradient(0deg,rgba(9,9,13,.97) 0%,rgba(9,9,13,.7) 22%,rgba(9,9,13,0) 46%);
+    background:
+      linear-gradient(90deg,rgba(9,9,13,.55) 0%,rgba(9,9,13,0) 45%),
+      linear-gradient(180deg,rgba(9,9,13,.7) 0%,rgba(9,9,13,0) 20%);
   }
-  .portada__video{
-    position:absolute;z-index:0;right:calc(var(--lado) - 2vw);top:40%;transform:translateY(-50%);
-    width:clamp(360px,54vw,900px);aspect-ratio:16/5.4;overflow:hidden;pointer-events:none;
-  }
-  .portada__video video{position:absolute;left:0;top:-24%;width:100%;mix-blend-mode:screen;filter:brightness(1.8) saturate(1.25)}
-  .portada > *:not(.portada__foto):not(.portada__video){position:relative;z-index:1}
+  .portada > *:not(.portada__foto){position:relative;z-index:1}
 
   .barra{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1.3rem var(--lado);transition:background .3s,padding .3s}
   .barra.solida{background:rgba(9,9,13,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-block:.8rem;border-bottom:1px solid var(--linea)}
@@ -209,8 +207,12 @@
   /* Ficha del corto */
   .ficha{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:3rem;align-items:start}
   .ficha__afiche{border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
-  .ficha__titulo-velas{margin:-.4rem 0 0 -3%;width:min(520px,100%);aspect-ratio:16/5.2;overflow:hidden;position:relative}
-  .ficha__titulo-velas video{position:absolute;left:0;top:-25%;width:100%;mix-blend-mode:screen;filter:brightness(1.7) saturate(1.2)}
+  .ficha__titulo-velas{
+    margin:-.4rem 0 0 -3%;width:min(520px,100%);aspect-ratio:16/5.2;overflow:hidden;position:relative;
+    -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 30%,transparent 98%);
+    mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 30%,transparent 98%);
+  }
+  .ficha__titulo-velas video{position:absolute;left:0;top:-25%;width:100%;mix-blend-mode:screen;filter:contrast(1.25) saturate(1.3)}
   .ficha__sinopsis{margin-top:1rem;max-width:60ch}
   .creditos{display:grid;grid-template-columns:max-content 1fr;gap:.45rem 2rem;margin-top:1.8rem;padding-top:1.5rem;border-top:1px solid var(--linea);font-size:.98rem}
   .creditos dt{color:var(--suave)}
@@ -268,7 +270,8 @@
     .barra ul.abierto a{font-size:.95rem}
   }
   @media (max-width:640px){
-    .portada__video{width:112vw;right:50%;top:calc(80px + 15vh);transform:translate(50%,-50%)}
+    .portada__foto img{width:100%;height:56vh;aspect-ratio:auto;object-position:50% 22%;top:60px;
+      -webkit-mask-image:linear-gradient(to bottom,#000 40%,transparent 78%);mask-image:linear-gradient(to bottom,#000 40%,transparent 78%)}
     .portada__foto{background:radial-gradient(ellipse 80% 40% at 50% 26%,rgba(184,20,106,.5),rgba(9,9,13,0) 75%),#09090d}
     .barra{padding:1.1rem var(--lado)}
     .portada__info{padding:calc(36vh + 40px) var(--lado) 0}
@@ -347,13 +350,7 @@
 
   <!-- ===== Portada ===== -->
   <section class="panel portada" id="destacado" aria-labelledby="titulo-portada">
-    <div class="portada__foto" aria-hidden="true"></div>
-    <div class="portada__video" aria-hidden="true">
-      <video muted playsinline preload="auto" poster="img/titulo-poster.jpg">
-        <source src="video/titulo-he-visto-a-luci.webm" type="video/webm">
-        <source src="video/titulo-he-visto-a-luci.mp4" type="video/mp4">
-      </video>
-    </div>
+    <div class="portada__foto" aria-hidden="true"><img src="img/portada-he-visto-a-luci.jpg" alt="" fetchpriority="high"></div>
 
 
     <div class="portada__info">
@@ -567,13 +564,6 @@
   }));
   dialogo.querySelector('.cerrar').addEventListener('click', () => dialogo.close());
   dialogo.addEventListener('click', e => { if (e.target === dialogo) dialogo.close(); });
-
-  // Video del título en la portada: arranca cuando se ve y queda titilando (repite el tramo con el título entero)
-  const videoPortada = document.querySelector('.portada__video video');
-  videoPortada.addEventListener('timeupdate', () => { if (videoPortada.currentTime >= 3.6) videoPortada.currentTime = 1.0; });
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-    new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? videoPortada.play().catch(()=>{}) : videoPortada.pause()), {threshold:.25}).observe(videoPortada);
-  } else { videoPortada.currentTime = 2; }
 
   // Videos: el de "Teasers" se reproduce al pasar el mouse; el del título, cuando aparece en pantalla
   document.querySelectorAll('.formato video').forEach(v => {
