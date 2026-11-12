@@ -114,7 +114,7 @@
   .portada__foto{
     position:absolute;inset:0;z-index:0;
     background:
-      radial-gradient(ellipse 40% 52% at 72% 38%,rgba(184,20,106,.55) 0%,rgba(110,14,52,.35) 40%,rgba(9,9,13,0) 75%),
+      radial-gradient(ellipse 40% 52% at 72% 40%,rgba(184,20,106,.28) 0%,rgba(110,14,52,.2) 40%,rgba(9,9,13,0) 75%),
       radial-gradient(ellipse 70% 60% at 85% 10%,rgba(94,12,40,.45),rgba(9,9,13,0) 70%),
       #09090d;
   }
@@ -122,14 +122,12 @@
     content:"";position:absolute;inset:0;
     background:linear-gradient(0deg,rgba(9,9,13,.97) 0%,rgba(9,9,13,.7) 22%,rgba(9,9,13,0) 46%);
   }
-  .portada__logo{
-    position:absolute;z-index:0;right:calc(var(--lado) + 2rem);top:38%;transform:translateY(-50%);
-    width:clamp(300px,37vw,580px);height:auto;
-    filter:drop-shadow(0 30px 60px rgba(0,0,0,.6)) drop-shadow(0 0 80px rgba(184,20,106,.35));
-    animation:aparecer 1.2s cubic-bezier(.2,.7,.2,1) both;
+  .portada__video{
+    position:absolute;z-index:0;right:calc(var(--lado) - 2vw);top:40%;transform:translateY(-50%);
+    width:clamp(360px,54vw,900px);aspect-ratio:16/5.4;overflow:hidden;pointer-events:none;
   }
-  @keyframes aparecer{from{opacity:0;transform:translateY(-46%) scale(.94)}to{opacity:1;transform:translateY(-50%) scale(1)}}
-  .portada > *:not(.portada__foto):not(.portada__logo){position:relative;z-index:1}
+  .portada__video video{position:absolute;left:0;top:-24%;width:100%;mix-blend-mode:screen;filter:brightness(1.8) saturate(1.25)}
+  .portada > *:not(.portada__foto):not(.portada__video){position:relative;z-index:1}
 
   .barra{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1.3rem var(--lado);transition:background .3s,padding .3s}
   .barra.solida{background:rgba(9,9,13,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-block:.8rem;border-bottom:1px solid var(--linea)}
@@ -270,7 +268,7 @@
     .barra ul.abierto a{font-size:.95rem}
   }
   @media (max-width:640px){
-    .portada__logo{width:min(78vw,360px);right:50%;top:calc(80px + 17vh);transform:translate(50%,-50%);animation:none}
+    .portada__video{width:112vw;right:50%;top:calc(80px + 15vh);transform:translate(50%,-50%)}
     .portada__foto{background:radial-gradient(ellipse 80% 40% at 50% 26%,rgba(184,20,106,.5),rgba(9,9,13,0) 75%),#09090d}
     .barra{padding:1.1rem var(--lado)}
     .portada__info{padding:calc(36vh + 40px) var(--lado) 0}
@@ -290,7 +288,7 @@
     html{scroll-behavior:auto}
     .chica button,.boton{transition:none}
     .chica button:hover{transform:none}
-    .portada__logo,.intro__estrella,.intro__letras,.intro::after,.intro__bajar,.intro__bajar svg{animation:none}
+    .intro__estrella,.intro__letras,.intro::after,.intro__bajar,.intro__bajar svg{animation:none}
   }
 </style>
 </head>
@@ -350,7 +348,12 @@
   <!-- ===== Portada ===== -->
   <section class="panel portada" id="destacado" aria-labelledby="titulo-portada">
     <div class="portada__foto" aria-hidden="true"></div>
-    <img class="portada__logo" src="img/logo-loop.png" alt="Logo de LoopFilms" fetchpriority="high">
+    <div class="portada__video" aria-hidden="true">
+      <video muted playsinline preload="auto" poster="img/titulo-poster.jpg">
+        <source src="video/titulo-he-visto-a-luci.webm" type="video/webm">
+        <source src="video/titulo-he-visto-a-luci.mp4" type="video/mp4">
+      </video>
+    </div>
 
 
     <div class="portada__info">
@@ -564,6 +567,13 @@
   }));
   dialogo.querySelector('.cerrar').addEventListener('click', () => dialogo.close());
   dialogo.addEventListener('click', e => { if (e.target === dialogo) dialogo.close(); });
+
+  // Video del título en la portada: arranca cuando se ve y queda titilando (repite el tramo con el título entero)
+  const videoPortada = document.querySelector('.portada__video video');
+  videoPortada.addEventListener('timeupdate', () => { if (videoPortada.currentTime >= 3.6) videoPortada.currentTime = 1.0; });
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? videoPortada.play().catch(()=>{}) : videoPortada.pause()), {threshold:.25}).observe(videoPortada);
+  } else { videoPortada.currentTime = 2; }
 
   // Videos: el de "Teasers" se reproduce al pasar el mouse; el del título, cuando aparece en pantalla
   document.querySelectorAll('.formato video').forEach(v => {
